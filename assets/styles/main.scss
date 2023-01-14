@@ -1,0 +1,13 @@
+@import "./mixins/_mixin.scss";
+
+// 套件
+@import "./tools/_tailwind.scss";
+
+// 全域設定
+@import "./_global.scss";
+
+// 自定義工具類
+@import "./tools/_tool.scss";
+
+// 動畫
+@import "./_animations.scss";

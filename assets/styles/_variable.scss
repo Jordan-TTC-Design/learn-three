@@ -1,0 +1,40 @@
+// $grid-columns: 12;
+// $grid-row-columns: 6;
+// $grid-gutter-width: 25px;
+$grid-breakpoints: (
+  xs: 0,
+  sm: 480px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  xxl: 1440px,
+  exl: 1920px,
+);
+
+// $container-max-widths: (
+//   xs: 100%,
+//   sm: 100%,
+//   md: 100%,
+//   lg: 100%,
+//   xl: 1080px,
+//   xxl: 1280px,
+//   exl: 1440px,
+// );
+
+// $container-padding: (
+//   xs: 20px,
+//   md: 40px,
+// );
+
+// $colors: (
+//   black: #000000,
+//   white: #ffffff,
+//   "primary":#785F48,
+//   "primary/dark":#3C3632,
+//   "primary/middle":#A89070,
+//   "primary/light":#E0D1B4,
+//   "primary/sp-light":#F1E9D9,
+//   "gray":#dadada,
+//   "ad/green":#24e29c,
+//   "ad/danger":rgba(211, 64, 93, 1),
+// );

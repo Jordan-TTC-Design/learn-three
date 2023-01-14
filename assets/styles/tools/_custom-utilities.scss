@@ -1,0 +1,20 @@
+@layer utilities {
+  .text-head-1 {
+    @apply text-4xl;
+  }
+  .text-head-2 {
+    @apply text-3xl;
+  }
+  .text-body-1 {
+    @apply text-lg;
+  }
+  .text-body-2 {
+    @apply text-base;
+  }
+  .text-display-1 {
+    @apply text-7xl;
+  }
+  .text-summary-1 {
+    @apply text-xs;
+  }
+}

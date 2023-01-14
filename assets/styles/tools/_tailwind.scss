@@ -1,0 +1,8 @@
+@tailwind base;
+@import "./_custom-base.scss";
+
+@tailwind components;
+@import "./_custom-components.scss";
+
+@tailwind utilities;
+@import "./_custom-utilities.scss";
