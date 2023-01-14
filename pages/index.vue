@@ -1,19 +1,15 @@
 <script setup>
-const point = ref(120);
-const { count } = useAddCount();
-console.log(count);
+import * as THREE from 'three';
+
 onMounted(() => {
-  console.log(window);
+  const scene = new THREE.Scene();
+  console.log(scene);
 });
 </script>
 
 <template>
   <div>
-    <h1 class="pageTitle">index</h1>
-    <p class="text-head-1">{{ point }}</p>
-    <div class="pageTitleBox container">
-      <p class="text-head-2 pageTitleBox__txt">{{ count }}</p>
-    </div>
+    <canvas id="basicThree"></canvas>
   </div>
 </template>
 
