@@ -3,7 +3,7 @@
   "scripts": {
     "build": "nuxt build --dotenv .env.production",
     "start": "nuxt start --dotenv .env.production",
-    "dev": "nuxt ",
+    "dev": "nuxt dev",
     "deploy": "vercel --prod",
     "generate": "nuxt generate --dotenv .env.production",
     "preview": "nuxt preview  --dotenv .env.production",
