@@ -1,0 +1,10 @@
+{
+  // 必要安裝的套件, 會在右下角出現提示
+  "recommendations": [
+    "dbaeumer.vscode-eslint", // Eslint
+    "stylelint.vscode-stylelint", // Stylelint
+    "Vue.volar", // Vue3
+    "csstools.postcss", // PostCSS
+    "bradlc.vscode-tailwindcss", // Tailwind
+  ]
+}

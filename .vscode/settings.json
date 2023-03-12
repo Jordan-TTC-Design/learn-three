@@ -1,10 +1,53 @@
 {
-  // "css.validate": false,
-  // "less.validate": false,
-  // "scss.validate": false,
-  "vetur.validation.style": false,
+  // 關閉VScode的檢查
+  "scss.validate": false,
+  "css.validate": false,
+  "less.validate": false,
   "css.lint.unknownAtRules": "ignore",
   "scss.lint.unknownAtRules": "ignore",
-  "scss.lint.unknownProperties": "ignore",
   "less.lint.unknownAtRules": "ignore",
+
+  // 關閉Vetur的檢查
+  "vetur.validation.style": false,
+  "vetur.validation.template": false,
+  "vetur.validation.script": false,
+
+  // Stylelint
+  "prettier.enable": false,
+  "stylelint.enable": true,
+  "stylelint.validate": [
+    "css",
+    "less",
+    "postcss",
+    "scss",
+    "sass",
+    "html"
+  ],
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "vue"
+  ],
+  "[css]": {
+    "editor.defaultFormatter": "stylelint.vscode-stylelint"
+  },
+
+  // Eslint
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[javascript]":{
+    "editor.defaultFormatter":"dbaeumer.vscode-eslint",
+    "editor.formatOnSave":false
+  },
+  "[typescript]":{
+      "editor.defaultFormatter":"dbaeumer.vscode-eslint",
+      "editor.formatOnSave":false
+  },
 }
