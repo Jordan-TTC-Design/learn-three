@@ -11,12 +11,12 @@ onMounted(() => {
   // Debug
   const gui = new dat.GUI()
 
-  // Canvas
-  const canvas = document.querySelector('canvas.webgl')
-
   // Scene
   const scene = new THREE.Scene()
 
+  const textureLoader = new THREE.TextureLoader();
+  const bakedShadow = textureLoader.load('/textures/16shadow/bakedShadow.jpg')
+  const simpleShadow = textureLoader.load('/textures/16shadow/simpleShadow.jpg')
   /**
  * Lights
  */
@@ -32,7 +32,7 @@ onMounted(() => {
   gui.add(directionalLight.position, 'x').min(-5).max(5).step(0.001)
   gui.add(directionalLight.position, 'y').min(-5).max(5).step(0.001)
   gui.add(directionalLight.position, 'z').min(-5).max(5).step(0.001)
-  directionalLight.castShadow = true
+  // directionalLight.castShadow = true
   directionalLight.shadow.mapSize.width = 1024
   directionalLight.shadow.mapSize.height = 1024
   directionalLight.shadow.camera.near = 1
@@ -54,28 +54,28 @@ onMounted(() => {
   // Spot light
   const spotLight = new THREE.SpotLight(0xFFFFFF, 0.4, 10, Math.PI * 0.3)
 
-  spotLight.castShadow = true
+  // spotLight.castShadow = true
 
   spotLight.position.set(0, 2, 2)
-  // scene.add(spotLight)
-  // scene.add(spotLight.target)
+  scene.add(spotLight)
+  scene.add(spotLight.target)
   spotLight.shadow.mapSize.width = 1024
   spotLight.shadow.mapSize.height = 1024
   spotLight.shadow.camera.near = 1
   spotLight.shadow.camera.far = 6
-  // const spotLightCameraHelper = new THREE.CameraHelper(spotLight.shadow.camera)
+  const spotLightCameraHelper = new THREE.CameraHelper(spotLight.shadow.camera)
   // scene.add(spotLightCameraHelper)
 
   const pointLight = new THREE.PointLight(0xFFFFFF, 0.3);
-  pointLight.castShadow = true
+  // pointLight.castShadow = true
   pointLight.position.set(-1, 1, 1)
-  scene.add(pointLight)
+  // scene.add(pointLight)
   pointLight.shadow.mapSize.width = 1024
   pointLight.shadow.mapSize.height = 1024
   pointLight.shadow.camera.near = 0.1
   pointLight.shadow.camera.far = 5
-  const pointLightCameraHelper = new THREE.CameraHelper(pointLight.shadow.camera)
-  scene.add(pointLightCameraHelper)
+  // const pointLightCameraHelper = new THREE.CameraHelper(pointLight.shadow.camera)
+  // scene.add(pointLightCameraHelper)
 
   /**
  * Materials
@@ -92,16 +92,31 @@ onMounted(() => {
     new THREE.SphereGeometry(0.5, 32, 32),
     material
   )
-  sphere.castShadow = true
+  // sphere.castShadow = true
 
   const plane = new THREE.Mesh(
     new THREE.PlaneGeometry(5, 5),
-    material
+    // new THREE.MeshBasicMaterial({
+    //   map: bakedShadow
+    // })
   )
   plane.rotation.x = -Math.PI * 0.5
   plane.position.y = -0.5
   plane.receiveShadow = true
   scene.add(sphere, plane)
+
+  const sphereShadow = new THREE.Mesh(
+    new THREE.PlaneGeometry(1.5, 1.5),
+    new THREE.MeshBasicMaterial({
+      color: 0x000000,
+      transparent: true,
+      alphaMap: simpleShadow
+    })
+  )
+  sphereShadow.rotation.x = -Math.PI * 0.5
+  sphereShadow.position.y = plane.position.y + 0.01
+
+  scene.add(sphereShadow)
 
   /**
  * Sizes
@@ -157,6 +172,16 @@ onMounted(() => {
 
   const tick = () => {
     const elapsedTime = clock.getElapsedTime()
+
+    // Update the sphere
+    sphere.position.x = Math.cos(elapsedTime) * 1.5
+    sphere.position.z = Math.sin(elapsedTime) * 1.5
+    sphere.position.y = Math.abs(Math.sin(elapsedTime * 3))
+
+    // Update the shadow
+    sphereShadow.position.x = sphere.position.x
+    sphereShadow.position.z = sphere.position.z
+    sphereShadow.material.opacity = (1 - sphere.position.y) * 0.3
 
     // Update controls
     controls.update()
