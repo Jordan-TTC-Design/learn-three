@@ -51,10 +51,13 @@ onMounted(() => {
       const radius = parameters.radius * Math.random()
       const brancherAngle = (i % parameters.branches) / parameters.branches * Math.PI * 2
       const spinAngle = radius * parameters.spin
+      // q: 為什麼用 math.pow?  a: 用來調整隨機性
       const randomX = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
       const randomY = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
       const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
 
+      // q: 為什麼要用 cos, sin? a: cos 是一個三角函數，是一個角度的餘弦值，其值域為 -1 到 1 之間，其中 0 為 0 度，0.5 為 30 度，-0.5 為 150 度，1 為 90 度，-1 為 270 度。
+      // q: Math.sin 是? a: sin 是一個三角函數，是一個角度的正弦值，其值域為 -1 到 1 之間，其中 0 為 90 度，0.5 為 60 度，-0.5 為 120 度，1 為 0 度，-1 為 180 度。
       positions[i3] = Math.cos(brancherAngle + spinAngle) * radius + randomX
       positions[i3 + 1] = randomY
       positions[i3 + 2] = Math.sin(brancherAngle + spinAngle) * radius + randomZ
