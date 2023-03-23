@@ -30,8 +30,12 @@
     "tailwindcss": "^3.2.4"
   },
   "dependencies": {
+<<<<<<< HEAD
     "cannon": "^0.6.2",
     "gsap": "^3.11.4",
+=======
+    "gsap": "^3.11.5",
+>>>>>>> 74a9ae87dd84b766955a6bdcdfd2a5a38892cafa
     "lil-gui": "^0.17.0",
     "three": "^0.148.0",
     "vercel": "^28.16.15"
