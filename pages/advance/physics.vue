@@ -15,15 +15,63 @@ onMounted(() => {
   * Physics
    */
   const world = new CANNON.World()
+
+  // 新增兩個材質，用於計算說兩者的碰撞
+  const concreteMaterial = new CANNON.Material('concrete')
+  const plasticMaterial = new CANNON.Material('plastic')
+  // 連接兩個材質
+  const concretePlasticContactMaterial = new CANNON.ContactMaterial(
+    concreteMaterial,
+    plasticMaterial,
+    {
+      friction: 0.1, // 摩擦力
+      restitution: 0.5 // 彈性
+    }
+  )
+  // 將連接的材質加入到物理引擎中
+  // world.addContactMaterial(concretePlasticContactMaterial)
+
+  // 如果不太在乎不同的材質碰撞，可以直接使用下面的方式，以同一種材質來計算碰撞
+  const defaultMaterial = new CANNON.Material('default')
+  const defaultContactMaterial = new CANNON.ContactMaterial(
+    defaultMaterial,
+    defaultMaterial,
+    {
+      friction: 0.1,
+      restitution: 0.5
+    }
+  )
+  world.addContactMaterial(defaultContactMaterial)
+  // 也可以把全部的材質都設定成同一種材質
+  world.defaultContactMaterial = defaultContactMaterial
+
   world.gravity.set(0, -9.82, 0)
   // 創建一個實體物件在物理引擎世界中
   const sphereShape = new CANNON.Sphere(0.5)
   const sphereBody = new CANNON.Body({
     mass: 1,
     position: new CANNON.Vec3(0, 3, 0),
-    shape: sphereShape
+    shape: sphereShape,
+    material: defaultMaterial
   })
   world.addBody(sphereBody)
+
+  // 這邊是給球體一個初速度
+  sphereBody.applyLocalForce(new CANNON.Vec3(50, 0, 0), new CANNON.Vec3(0, 0, 0))
+
+  // 新增實體地板在物理引擎世界中
+  const floorShape = new CANNON.Plane();
+  const floorBody = new CANNON.Body({
+    mass: 0,
+    shape: floorShape,
+    position: new CANNON.Vec3(-2, 0, 0),
+    material: defaultMaterial
+  })
+
+  // 旋轉地板
+  // q:可以解釋 quaternion.setFromAxisAngle 嗎？
+  floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(-1, 0, 0), Math.PI * 0.5)
+  world.addBody(floorBody)
 
   /**
  * Base
@@ -116,6 +164,9 @@ onMounted(() => {
     camera.aspect = sizes.width / sizes.height
     camera.updateProjectionMatrix()
 
+    // 反推 sphereBody 的位置
+    sphereBody.applyForse(new CANNON.Vec3(-0.5, 0, 0), sphereBody.position)
+
     // Update renderer
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
@@ -148,17 +199,24 @@ onMounted(() => {
  * Animate
  */
   const clock = new THREE.Clock()
-
+  let oldTime = 0;
   const tick = () => {
     const elapsedTime = clock.getElapsedTime()
-
+    const deltaTime = elapsedTime - oldTime;
+    oldTime = elapsedTime;
     // Update controls
     controls.update()
 
     // Update physics world
-    // word.step(1 / 60, elapsedTime, 3)
-    world.step(1 / 60)
+    world.step(1 / 60, deltaTime, 3)
+    // world.step(1 / 60)
 
+    // combine cannonjs and threejs
+    // sphere.position.x = sphereBody.position.x
+    // sphere.position.y = sphereBody.position.y
+    // sphere.position.z = sphereBody.position.z
+    sphere.position.copy(sphereBody.position)
+    floor.position.copy(floorBody.position)
     // Render
     renderer.render(scene, camera)
 
