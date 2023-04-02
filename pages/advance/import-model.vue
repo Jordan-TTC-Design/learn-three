@@ -3,14 +3,14 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
-import * as dat from 'lil-gui';
+// import * as dat from 'lil-gui';
 
 const threeScene = ref(null);
 onMounted(() => {
   /**
  * Debug
  */
-  const gui = new dat.GUI()
+  // const gui = new dat.GUI()
 
   // model
   const dracoLoader = new DRACOLoader()
