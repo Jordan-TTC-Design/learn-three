@@ -94,7 +94,8 @@ export default defineNuxtConfig({
           additionalData: '@import "@/assets/styles/main.scss";'
         }
       }
-    }
+    },
+    plugins: [require('vite-plugin-glsl')()]
   },
   postcss: {
     plugins: {
