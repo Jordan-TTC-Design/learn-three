@@ -4,7 +4,9 @@ import Time from '@/assets/utils/Time.js';
 import Camera from '@/assets/models/Camera.js';
 import Render from '@/assets/models/Render.js';
 import World from '@/assets/models/World.js';
-import Environment from '@/assets/models/Environment.js';
+// import Environment from '@/assets/models/Environment.js';
+import sources from '@/assets/models/Sources.js';
+import Resources from '@/assets/models/Resources.js'
 let instance = null;
 
 export default class Experience {
@@ -28,8 +30,9 @@ export default class Experience {
     this.scene = new THREE.Scene();
     this.camera = new Camera(this);
     this.renderer = new Render(this);
+    this.resources = new Resources(sources)
     this.world = new World(this);
-    this.environment = new Environment(this);
+    // this.environment = new Environment(this);
   }
 
   resize() {

@@ -1,5 +1,5 @@
 <script setup>
-import { Robot, FlyingRobot } from '@/assets/models/robet';
+import { Robot, FlyingRobot } from '@/assets/models/robet.js';
 
 const zoe = new Robot({ name: 'zoe' });
 const jordan = new Robot({ name: 'jordan' });
